@@ -6,13 +6,5 @@
       "password": "z123456789"
     }
   ],
-  "contacts": [
-    {
-      "id": 1,
-      "userId": 1,
-      "firstName": "Alex",
-      "lastName": "Ivanov",
-      "phone": "89011946950"
-    }
-  ]
+  "contacts": []
 }

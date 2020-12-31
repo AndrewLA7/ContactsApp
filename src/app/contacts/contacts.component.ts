@@ -13,7 +13,7 @@ export class ContactsComponent implements OnInit, OnDestroy {
   contacts: ContactModel[] = [];
   currentContact?: ContactModel;
 
-  searchText?: string;
+  searchText: string = '';
   searchContacts: ContactModel[] | null = null;
   searchModelChanged: Subject<string> = new Subject<string>();
   searchModelChangeSubscription!: Subscription;
@@ -25,15 +25,8 @@ export class ContactsComponent implements OnInit, OnDestroy {
     this.searchModelChangeSubscription = this.searchModelChanged
       .pipe(debounceTime(500), distinctUntilChanged())
       .subscribe((searchText) => {
-        if (!searchText) {
-          this.searchContacts = null;
-          return;
-        }
-        this.searchContacts = this.contacts.filter((x) =>
-          (x.firstName + x.lastName + x.phone)
-            .toLowerCase()
-            .includes(searchText.toLowerCase())
-        );
+        this.searchText = searchText;
+        this.updateSearch(searchText);
       });
   }
 
@@ -41,34 +34,45 @@ export class ContactsComponent implements OnInit, OnDestroy {
     this.searchModelChangeSubscription.unsubscribe();
   }
 
+  updateSearch(searchText: string) {
+    if (!searchText) {
+      this.searchContacts = null;
+      return;
+    }
+    this.searchContacts = this.contacts.filter((x) =>
+      (x.firstName + x.lastName + x.phone)
+        .toLowerCase()
+        .includes(searchText.toLowerCase())
+    );
+  }
+
   update() {
-    this.apiService.getContacts().subscribe((x) => (this.contacts = x));
+    this.apiService.getContacts().subscribe((x) => {
+      this.contacts = x;
+      this.updateSearch(this.searchText);
+    });
   }
 
   addContact() {
-    this.apiService.addContact(this.currentContact)
     this.currentContact = new ContactModel();
     this.contacts.push(this.currentContact);
   }
 
-  deleteThisContact(contact?: ContactModel, searchContacts?: ContactModel[]) {
+  saveContact() {
+    if (!this.currentContact) return;
+    if (this.currentContact.id)
+      this.apiService.editContact(this.currentContact).subscribe();
+    else this.apiService.addContact(this.currentContact).subscribe();
+    this.update();
+  }
+
+  deleteContact(contact?: ContactModel, searchContacts?: ContactModel[]) {
     this.result = window.confirm(
       'Do you really want to delete this contact from your contacts list?'
     );
-    if (this.result) {
-      for (let i = this.contacts.length - 1; i >= 0; i--) {
-        if (this.contacts[i] == contact) {
-          this.contacts.splice(i, 1);
-        }
-      }
-
-      if (this.searchContacts) {
-        for (let i = this.searchContacts.length - 1; i >= 0; i--) {
-          if (this.searchContacts[i] == contact) {
-            this.searchContacts.splice(i, 1);
-          }
-        }
-      }
+    if (this.result && this.currentContact) {
+      this.apiService.deleteContact(this.currentContact).subscribe();
+      this.update();
       this.currentContact = undefined;
     }
   }

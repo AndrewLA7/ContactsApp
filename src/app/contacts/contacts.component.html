@@ -20,7 +20,7 @@
             href="#"
             class="list-group-item list-group-item-action"
             aria-current="true"
-            >
+          >
             <strong>{{ contact.firstName }} {{ contact.lastName }}</strong>
           </a>
         </div>
@@ -39,12 +39,12 @@
           </a>
         </div>
       </div>
-      <button type="button" class="btn btn-success" (click)="addContact()">
+      <button type="button" class="btn btn-success add-btn" (click)="addContact()">
         Add contact
       </button>
     </div>
 
-    <div class="col-4 contact-form detailedInfo">
+    <div class="col-6 contact-form detailedInfo">
       <form *ngIf="currentContact">
         <div class="mb-3">
           <h3>Detailed info</h3>
@@ -74,18 +74,8 @@
             id="phoneNameInput"
           />
         </div>
-        <button
-          class="btn btn-danger"
-          (click)="deleteThisContact(currentContact)"
-        >
-          Delete
-        </button>
-        <button
-          class="btn btn-succes"
-          (click)="saveContact(currentContact)"
-        >
-          Delete
-        </button>
+        <button class="btn btn-success" (click)="saveContact()">Save</button>
+        <button class="btn btn-danger" (click)="deleteContact()">Delete</button>
       </form>
     </div>
   </div>
