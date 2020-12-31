@@ -1,14 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, retry } from 'rxjs/operators';
-import { ContactModel } from './models/contact.model';
+import { ContactModel } from '../models/contact.model';
+import { ApiService } from '../services/api.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  selector: 'app-contacts',
+  templateUrl: './contacts.component.html',
+  styleUrls: ['./contacts.component.scss'],
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class ContactsComponent implements OnInit, OnDestroy {
   contacts: ContactModel[] = [];
   currentContact?: ContactModel;
 
@@ -17,11 +18,10 @@ export class AppComponent implements OnInit, OnDestroy {
   searchModelChanged: Subject<string> = new Subject<string>();
   searchModelChangeSubscription!: Subscription;
   result: boolean = false;
-  randomColor = Math.floor(Math.random()*16777215).toString(16);
-
-  constructor() {}
+  constructor(private apiService: ApiService) {}
 
   ngOnInit() {
+    this.update();
     this.searchModelChangeSubscription = this.searchModelChanged
       .pipe(debounceTime(500), distinctUntilChanged())
       .subscribe((searchText) => {
@@ -41,8 +41,12 @@ export class AppComponent implements OnInit, OnDestroy {
     this.searchModelChangeSubscription.unsubscribe();
   }
 
+  update() {
+    this.apiService.getContacts().subscribe((x) => (this.contacts = x));
+  }
+
   addContact() {
-    this.randomColor = Math.floor(Math.random()*16777215).toString(16);
+    this.apiService.addContact(this.currentContact)
     this.currentContact = new ContactModel();
     this.contacts.push(this.currentContact);
   }

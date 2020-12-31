@@ -1,5 +1,5 @@
 <div class="container">
-  <!-- <div class="row">
+  <div class="row">
     <div class="col-4">
       <h3 *ngIf="!searchContacts; else elseBlock">Contacts</h3>
       <ng-template #elseBlock><h3>Searched contacts</h3></ng-template>
@@ -20,15 +20,8 @@
             href="#"
             class="list-group-item list-group-item-action"
             aria-current="true"
-            ><img alt="A" [style.background-color]="randomColor"/>
-            <strong>{{ contact.firstName }} {{ contact.lastName }}</strong>
-
-            <button
-              class="btn btn-outline-danger btn-small btn-delete"
-              (click)="deleteThisContact(contact)"
             >
-              Delete
-            </button>
+            <strong>{{ contact.firstName }} {{ contact.lastName }}</strong>
           </a>
         </div>
       </div>
@@ -43,12 +36,6 @@
             aria-current="true"
           >
             <strong>{{ contact.firstName }} {{ contact.lastName }}</strong>
-            <button
-              class="btn btn-outline-danger btn-small btn-delete"
-              (click)="deleteThisContact(contact, searchContacts)"
-            >
-              Delete
-            </button>
           </a>
         </div>
       </div>
@@ -60,7 +47,7 @@
     <div class="col-4 contact-form detailedInfo">
       <form *ngIf="currentContact">
         <div class="mb-3">
-          <h4>Detailed info</h4>
+          <h3>Detailed info</h3>
           <label for="firstNameInput" class="form-label">First name</label>
           <input
             class="form-control form-control-sm"
@@ -93,9 +80,13 @@
         >
           Delete
         </button>
+        <button
+          class="btn btn-succes"
+          (click)="saveContact(currentContact)"
+        >
+          Delete
+        </button>
       </form>
     </div>
-  </div> -->
-  <router-outlet></router-outlet>
-  
+  </div>
 </div>
