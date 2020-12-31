@@ -2,8 +2,8 @@
   "users": [
     {
       "id": 1,
-      "login": "andrewla",
-      "password": "z123456789"
+      "login": "admin",
+      "password": "admin"
     }
   ],
   "contacts": []
