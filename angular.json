@@ -136,5 +136,7 @@
       }
     }
   },
-  "defaultProject": "AppContacts"
+  "cli": {
+    "analytics": false
+  }
 }
