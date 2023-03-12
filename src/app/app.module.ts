@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const routes: Routes = [
   { path: '', component: ContactsComponent, canActivate: [AuthGuard] },
@@ -19,7 +20,7 @@ const routes: Routes = [
     BrowserModule,
     HttpClientModule,
     FormsModule, 
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes), BrowserAnimationsModule,
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent],

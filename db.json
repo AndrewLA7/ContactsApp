@@ -6,5 +6,14 @@
       "password": "admin"
     }
   ],
-  "contacts": []
+
+  "contacts": [
+    {
+      "firstName": "Andrey",
+      "lastName": "Podbornov",
+      "phone": "89011946050",
+      "userId": 1,
+      "id": 1
+    }
+  ]
 }
