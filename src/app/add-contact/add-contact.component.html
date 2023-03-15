@@ -1,6 +1,6 @@
 <form [formGroup]="newContactForm">
   <h2 mat-dialog-title>New Contact</h2>
-  <mat-dialog-content class="content">
+  <mat-dialog-content class="add-contact__container">
     <div>
       <mat-form-field>
         <mat-label>First name</mat-label>
@@ -29,9 +29,9 @@
     </div>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
-    <div class="btn-container">
-      <button class="btn" mat-stroked-button mat-dialog-close color="primary">Cancel</button>
-      <button class="btn" mat-raised-button color="primary" [disabled]="newContactForm.invalid" mat-dialog-close
+    <div class="add-contact__btn-container">
+      <button class="add-contact__btn-container__action" mat-stroked-button mat-dialog-close color="primary">Cancel</button>
+      <button class="add-contact__btn-container__action" mat-raised-button color="primary" [disabled]="newContactForm.invalid" mat-dialog-close
         (click)="addNewContact()">Add</button>
     </div>
   </mat-dialog-actions>

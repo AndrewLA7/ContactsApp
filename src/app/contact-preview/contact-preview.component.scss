@@ -1,18 +1,18 @@
-.form-container {
+.preview-form {
   max-width: 245px;
 }
 
-.header {
+.preview-form__header {
   display: flex;
   justify-content:space-between;
   padding: 10px 10px 0px 17px;
 }
 
-.icon {
+.preview-form__header__icon {
   cursor: pointer;
 }
 
-.actions {
+.preview-form__action {
   display: flex;
   justify-content: center;
 }

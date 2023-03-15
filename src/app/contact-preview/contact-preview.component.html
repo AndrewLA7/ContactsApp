@@ -1,8 +1,8 @@
-<form class="form-container">
+<form class="preview-form">
   <mat-card>
-    <div class="header">
+    <div class="preview-form__header">
       <h3>Preview</h3>
-      <mat-icon class="icon" aria-hidden="false" fontIcon="close" (click)="unlink()"></mat-icon>
+      <mat-icon class="preview-form__header__icon" aria-hidden="false" fontIcon="close" (click)="unlink()"></mat-icon>
     </div>
     <mat-card-content>
       <mat-form-field>
@@ -18,7 +18,7 @@
         <input type="text" readonly="true" matInput value="{{ currentContact.phone }}">
       </mat-form-field>
     </mat-card-content>
-    <mat-card-actions class="actions">
+    <mat-card-actions class="preview-form__action">
       <button mat-stroked-button color="primary" (click)="redirectToEdit()">Edit</button>
     </mat-card-actions>
   </mat-card>

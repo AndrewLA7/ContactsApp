@@ -1,19 +1,14 @@
-.body-container {
+.body {
   margin-top: 5px;
   max-width: 245px;
 }
 
-.actions {
-  display: flex;
-  justify-content: center;
-}
-
-.title {
+.header__title {
   margin: 0px 5px 0px 0px;
   padding: 0 0px 0px;
 }
 
-.full-width {
+.body__input {
   width: 100%;
 }
 
@@ -22,7 +17,7 @@
   align-items: center;
 }
 
-.btn-container {
+.body__btn-container {
   display: flex;
   justify-content: space-between;
 }

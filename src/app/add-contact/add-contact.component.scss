@@ -1,18 +1,10 @@
-.form-container {
+.add-contact__container {
   max-width: 245px;
 }
-.content {
-  padding: 0px 24px 0px 24px;
-}
 
-.actions {
-  display: flex;
-  justify-content: center;
-}
-
-.btn-container {
+.add-contact__btn {
   padding: 0px 12px 5px 0px;
-  .btn {
+  .add-contact__btn-container__action {
     width: 80px;
   }
 }

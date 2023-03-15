@@ -1,12 +1,14 @@
-.list-group-item {
+.contacts {
+  max-width: 466px;
+  width: fit-content;
+}
+
+.contacts__body__list {
   height: 50px;
+  cursor: pointer;
 }
 
-.btn-delete {
-  padding: 0 0 0 0px;
-}
-
-.scrollingDiv {
+.contacts__body__content {
   overflow-y: scroll;
   height: 325px;
   width: 180px;
@@ -20,14 +22,7 @@
   max-width: 212px;
   margin-top: 10px;
 }
-.btn-danger{
-  margin-left: 15px;
-}
 
-.row {
+.contacts__body {
   display: flex;
-}
-
-.item {
-  cursor: pointer;
 }
