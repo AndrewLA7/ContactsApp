@@ -1,6 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Subject, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, retry } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, retry, takeUntil } from 'rxjs/operators';
+import { AddContactComponent } from '../add-contact/add-contact.component';
 import { ContactModel } from '../models/contact.model';
 import { ApiService } from '../services/api.service';
 
@@ -10,28 +13,37 @@ import { ApiService } from '../services/api.service';
   styleUrls: ['./contacts.component.scss'],
 })
 export class ContactsComponent implements OnInit, OnDestroy {
+  protected destroy$: Subject<void> = new Subject<void>();
+
   contacts: ContactModel[] = [];
   currentContact?: ContactModel;
+  searchForm: FormGroup;
 
   searchText: string = '';
   searchContacts: ContactModel[] | null = null;
   searchModelChanged: Subject<string> = new Subject<string>();
   searchModelChangeSubscription!: Subscription;
   result: boolean = false;
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, public dialog: MatDialog, private fb: FormBuilder) { }
 
   ngOnInit() {
+    this.initForm();
     this.update();
-    this.searchModelChangeSubscription = this.searchModelChanged
-      .pipe(debounceTime(500), distinctUntilChanged())
-      .subscribe((searchText) => {
-        this.searchText = searchText;
+    this.searchForm.get('searchQuery')?.valueChanges
+    .pipe(
+      takeUntil(this.destroy$),
+      debounceTime(400),
+    )
+    .subscribe(searchText => {
+      this.searchText = searchText;
         this.updateSearch(searchText);
-      });
+    });
   }
 
-  ngOnDestroy() {
-    this.searchModelChangeSubscription.unsubscribe();
+  private initForm() {
+    this.searchForm = this.fb.group({
+      searchQuery: new FormControl('')
+    });
   }
 
   updateSearch(searchText: string) {
@@ -47,33 +59,36 @@ export class ContactsComponent implements OnInit, OnDestroy {
   }
 
   update() {
-    this.apiService.getContacts().subscribe((x) => {
+    this.apiService.getContacts()
+    .pipe(
+      takeUntil(this.destroy$),
+    )
+    .subscribe((x) => {
       this.contacts = x;
       this.updateSearch(this.searchText);
     });
   }
 
-  addContact() {
-    this.currentContact = new ContactModel();
-    this.contacts.push(this.currentContact);
+  addNewContactForm() {
+    const dialogRef = this.dialog.open(AddContactComponent, {
+      width: '261px',
+    });
+
+    dialogRef.afterClosed()
+    .pipe(
+      takeUntil(this.destroy$),
+    )
+    .subscribe(() => {
+        this.update();
+    });
   }
 
-  saveContact() {
-    if (!this.currentContact) return;
-    if (this.currentContact.id)
-      this.apiService.editContact(this.currentContact).subscribe();
-    else this.apiService.addContact(this.currentContact).subscribe();
-    this.update();
+  unlinkContact() {
+    this.currentContact = undefined;
   }
 
-  deleteContact(contact?: ContactModel, searchContacts?: ContactModel[]) {
-    this.result = window.confirm(
-      'Do you really want to delete this contact from your contacts list?'
-    );
-    if (this.result && this.currentContact) {
-      this.apiService.deleteContact(this.currentContact).subscribe();
-      this.update();
-      this.currentContact = undefined;
-    }
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

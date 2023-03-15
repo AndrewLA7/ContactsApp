@@ -1,0 +1,28 @@
+.body-container {
+  margin-top: 5px;
+  max-width: 245px;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+}
+
+.title {
+  margin: 0px 5px 0px 0px;
+  padding: 0 0px 0px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: space-between;
+}

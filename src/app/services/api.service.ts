@@ -16,8 +16,8 @@ export class ApiService {
     if (userJson) this.user = JSON.parse(userJson);
   }
 
-  login(login: string, password: string) {
-    return this.getUser(login, password).pipe(
+  login(email: string, password: string) {
+    return this.getUser(email, password).pipe(
       map((x) => {
         if (!x) return null;
         localStorage.setItem('user', JSON.stringify(x));
@@ -30,10 +30,10 @@ export class ApiService {
     this.user = undefined;
   }
 
-  getUser(login: string, password: string) {
+  getUser(email: string, password: string) {
     return this.httpClient
       .get<UserModel[]>(
-        environment.apiUrl + `users?login=${login}&password=${password}`
+        environment.apiUrl + `users?email=${email}&password=${password}`
       )
       .pipe(map((x) => x[0]));
   }

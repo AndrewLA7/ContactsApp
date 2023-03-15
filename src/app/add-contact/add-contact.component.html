@@ -1,0 +1,38 @@
+<form [formGroup]="newContactForm">
+  <h2 mat-dialog-title>New Contact</h2>
+  <mat-dialog-content class="content">
+    <div>
+      <mat-form-field>
+        <mat-label>First name</mat-label>
+        <input formControlName="firstName" type="text" matInput>
+        <mat-error *ngIf="(formControls.firstName.touched || submitted) && formControls.firstName.errors?.required">
+          First name is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="formControls.firstName.errors?.not_allowed_characters">
+          Use the <strong>Latin</strong> alphabet
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Last name</mat-label>
+        <input formControlName="lastName" type="text" matInput>
+        <mat-error *ngIf="(formControls.lastName.touched || submitted) && formControls.lastName.errors?.required">
+          Last name is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="formControls.lastName.errors?.not_allowed_characters">
+          Use the <strong>Latin</strong> alphabet
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Phone</mat-label>
+        <input formControlName="phone" type="text" matInput>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <div class="btn-container">
+      <button class="btn" mat-stroked-button mat-dialog-close color="primary">Cancel</button>
+      <button class="btn" mat-raised-button color="primary" [disabled]="newContactForm.invalid" mat-dialog-close
+        (click)="addNewContact()">Add</button>
+    </div>
+  </mat-dialog-actions>
+</form>

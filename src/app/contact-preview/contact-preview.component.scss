@@ -1,0 +1,18 @@
+.form-container {
+  max-width: 245px;
+}
+
+.header {
+  display: flex;
+  justify-content:space-between;
+  padding: 10px 10px 0px 17px;
+}
+
+.icon {
+  cursor: pointer;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+}

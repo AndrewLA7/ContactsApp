@@ -2,18 +2,44 @@
   "users": [
     {
       "id": 1,
-      "login": "admin",
+      "login": "admin@test.ru",
       "password": "admin"
     }
   ],
-
   "contacts": [
     {
       "firstName": "Andrey",
-      "lastName": "Podbornov",
+      "lastName": "Podbornovv",
       "phone": "89011946050",
       "userId": 1,
       "id": 1
+    },
+    {
+      "firstName": "AAAA",
+      "lastName": "BBBB",
+      "phone": "777",
+      "id": 5
+    },
+    {
+      "firstName": "GARRY",
+      "lastName": "GARRY",
+      "phone": "GARRY",
+      "userId": 1,
+      "id": 16
+    },
+    {
+      "firstName": "garry",
+      "lastName": "garry",
+      "phone": "",
+      "userId": 1,
+      "id": 18
+    },
+    {
+      "firstName": "Qwerty",
+      "lastName": "Qwerty",
+      "phone": "777",
+      "userId": 1,
+      "id": 19
     }
   ]
 }

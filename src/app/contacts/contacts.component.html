@@ -1,82 +1,48 @@
 <div class="container">
   <div class="row">
-    <div class="col-4">
-      <h3 *ngIf="!searchContacts; else elseBlock">Contacts</h3>
-      <ng-template #elseBlock><h3>Searched contacts</h3></ng-template>
-      <input
-        [ngModel]="searchText"
-        (ngModelChange)="searchModelChanged.next($event)"
-        class="form-control form-control-sm"
-        type="text"
-        placeholder="Search in contacts"
-      />
-
-      <div *ngIf="!searchContacts">
-        <div class="list-group scrollingDiv">
-          <a
-            *ngFor="let contact of contacts"
-            (click)="currentContact = contact"
-            [ngClass]="{ active: currentContact == contact }"
-            href="#"
-            class="list-group-item list-group-item-action"
-            aria-current="true"
-          >
-            <strong>{{ contact.firstName }} {{ contact.lastName }}</strong>
-          </a>
-        </div>
-      </div>
-      <div *ngIf="searchContacts">
-        <div class="list-group scrollingDiv">
-          <a
-            *ngFor="let contact of searchContacts"
-            (click)="currentContact = contact"
-            [ngClass]="{ active: currentContact == contact }"
-            href="#"
-            class="list-group-item list-group-item-action"
-            aria-current="true"
-          >
-            <strong>{{ contact.firstName }} {{ contact.lastName }}</strong>
-          </a>
-        </div>
-      </div>
-      <button type="button" class="btn btn-success add-btn" (click)="addContact()">
-        Add contact
-      </button>
-    </div>
-
-    <div class="col-6 contact-form detailedInfo">
-      <form *ngIf="currentContact">
-        <div class="mb-3">
-          <h3>Detailed info</h3>
-          <label for="firstNameInput" class="form-label">First name</label>
-          <input
-            class="form-control form-control-sm"
-            id="firstNameInput"
-            [(ngModel)]="currentContact.firstName"
-            name="firstName"
-          />
-        </div>
-        <div class="mb-3">
-          <label for="lastNameInput" class="form-label">Last name</label>
-          <input
-            class="form-control form-control-sm"
-            [(ngModel)]="currentContact.lastName"
-            name="lastName"
-            id="lastNameInput"
-          />
-        </div>
-        <div class="mb-3">
-          <label for="phoneNameInput" class="form-label">Phone</label>
-          <input
-            class="form-control form-control-sm"
-            [(ngModel)]="currentContact.phone"
-            name="phone"
-            id="phoneNameInput"
-          />
-        </div>
-        <button class="btn btn-success" (click)="saveContact()">Save</button>
-        <button class="btn btn-danger" (click)="deleteContact()">Delete</button>
+    <div>
+      <h3 *ngIf="!searchContacts; else searchBlock">Contacts</h3>
+      <ng-template #searchBlock>
+        <h3>Searched contacts</h3>
+      </ng-template>
+      <form [formGroup]="searchForm">
+        <mat-form-field class="example-full-width">
+          <mat-label>Search in contacts</mat-label>
+          <input formControlName="searchQuery" type="text" matInput
+            placeholder="Ex. Alex">
+        </mat-form-field>
       </form>
+
+      <div *ngIf="!searchContacts" class="row">
+        <div class="list-group scrollingDiv">
+          <mat-list role="list">
+            <mat-list-item *ngFor="let contact of contacts" role="listitem">
+              <a (click)="currentContact = contact" [ngClass]="{ active: currentContact == contact }" 
+                class="list-group-item list-group-item-action item" aria-current="true">
+                <strong>{{ contact.firstName }} {{ contact.lastName }}</strong>
+              </a>
+            </mat-list-item>
+          </mat-list>
+        </div>
+        <app-contact-preview *ngIf="currentContact" [currentContact]="currentContact"
+          (unlinkContact)="unlinkContact()"></app-contact-preview>
+      </div>
+
+      <div *ngIf="searchContacts" class="row">
+        <div class="list-group scrollingDiv">
+          <mat-list role="list">
+            <mat-list-item *ngFor="let contact of searchContacts" role="listitem">
+              <a (click)="currentContact = contact" [ngClass]="{ active: currentContact == contact }"
+                class="list-group-item list-group-item-action item" aria-current="true">
+                <strong>{{ contact.firstName }} {{ contact.lastName }}</strong>
+              </a>
+            </mat-list-item>
+          </mat-list>
+        </div>
+        <app-contact-preview *ngIf="currentContact" [currentContact]="currentContact" (unlinkContact)="unlinkContact()"></app-contact-preview>
+      </div>
+      <mat-divider></mat-divider>
+      <button mat-raised-button class="add-btn" color="primary" (click)="addNewContactForm()">New Contact</button>
     </div>
   </div>
 </div>
