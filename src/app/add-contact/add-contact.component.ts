@@ -1,7 +1,7 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Subject, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, retry, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ContactModel } from '../models/contact.model';
 import { ApiService } from '../services/api.service';
 import { CustomValidators } from '../validators/custom.validator';
@@ -10,6 +10,7 @@ import { CustomValidators } from '../validators/custom.validator';
   selector: 'app-add-contact',
   templateUrl: './add-contact.component.html',
   styleUrls: ['./add-contact.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddContactComponent implements OnInit, OnDestroy {
   protected destroy$: Subject<void> = new Subject<void>();

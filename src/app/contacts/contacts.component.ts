@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Subject, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, retry, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 import { AddContactComponent } from '../add-contact/add-contact.component';
 import { ContactModel } from '../models/contact.model';
 import { ApiService } from '../services/api.service';
@@ -10,7 +10,7 @@ import { ApiService } from '../services/api.service';
 @Component({
   selector: 'app-contacts',
   templateUrl: './contacts.component.html',
-  styleUrls: ['./contacts.component.scss'],
+  styleUrls: ['./contacts.component.scss']
 })
 export class ContactsComponent implements OnInit, OnDestroy {
   protected destroy$: Subject<void> = new Subject<void>();
@@ -21,9 +21,6 @@ export class ContactsComponent implements OnInit, OnDestroy {
 
   searchText: string = '';
   searchContacts: ContactModel[] | null = null;
-  searchModelChanged: Subject<string> = new Subject<string>();
-  searchModelChangeSubscription!: Subscription;
-  result: boolean = false;
   constructor(private apiService: ApiService, public dialog: MatDialog, private fb: FormBuilder) { }
 
   ngOnInit() {

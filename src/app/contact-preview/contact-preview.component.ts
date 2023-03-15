@@ -1,26 +1,18 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, retry } from 'rxjs/operators';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { ContactModel } from '../models/contact.model';
-import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-contact-preview',
   templateUrl: './contact-preview.component.html',
   styleUrls: ['./contact-preview.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ContactPreviewComponent implements OnInit, OnDestroy {
+export class ContactPreviewComponent  {
   @Input() currentContact: ContactModel;
   @Output() unlinkContact: EventEmitter<boolean> = new EventEmitter();
 
-  constructor(private apiService: ApiService, private router: Router) {}
-
-  ngOnInit() {
-  }
-
-  ngOnDestroy() {
-  }
+  constructor(private router: Router) {}
 
   unlink() {
     this.unlinkContact.emit(true);

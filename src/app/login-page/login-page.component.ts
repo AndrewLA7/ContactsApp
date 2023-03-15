@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -9,6 +9,7 @@ import { ApiService } from '../services/api.service';
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginPageComponent implements OnInit {
   protected destroy$: Subject<void> = new Subject<void>();

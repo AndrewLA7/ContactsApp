@@ -1,8 +1,8 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, retry, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ContactModel } from '../models/contact.model';
 import { ApiService } from '../services/api.service';
 import { CustomValidators } from '../validators/custom.validator';
@@ -11,6 +11,7 @@ import { CustomValidators } from '../validators/custom.validator';
   selector: 'app-detailed-info',
   templateUrl: './detailed-info.component.html',
   styleUrls: ['./detailed-info.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DetailedInfoComponent implements OnInit, OnDestroy {
   protected destroy$: Subject<void> = new Subject<void>();
